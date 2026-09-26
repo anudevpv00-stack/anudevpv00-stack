@@ -2,539 +2,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> swiggy </title> - Food Delivery</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+<title>CinePulse - Movie Reviews</title>
+
+<style>
+:root{
+    --red:#e50914;
+    --black:#050505;
+    --bg:#0b0b0b;
+    --card:#151515;
+    --border:#292929;
+    --text:#fff;
+    --muted:#999;
+    --gold:#f5c518;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--bg);
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:#050505ee;
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:16px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:900;
+    color:var(--red);
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:#ccc;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.hero{
+    min-height:550px;
+    display:flex;
+    align-items:center;
+    padding:60px 7%;
+    background:
+    linear-gradient(90deg,#000 0%,#000b 50%,#0003),
+    url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1900&q=85");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:65px;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:var(--red);
+}
+
+.hero p{
+    max-width:600px;
+    color:#ccc;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.btn{
+    border:0;
+    padding:13px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.red{
+    background:var(--red);
+    color:white;
+}
+
+.search{
+    padding:25px 7%;
+    background:#111;
+}
+
+.search input{
+    width:100%;
+    padding:15px;
+    background:#191919;
+    border:1px solid #333;
+    border-radius:7px;
+    color:white;
+    outline:none;
+}
+
+section{
+    padding:60px 7%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:35px;
+}
+
+.title span{
+    color:var(--red);
+}
+
+.filters{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.filters button{
+    padding:10px 18px;
+    border:1px solid #333;
+    background:#181818;
+    color:#aaa;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.filters button.active{
+    background:var(--red);
+    color:white;
+    border-color:var(--red);
+}
+
+.movie-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fill,minmax(190px,1fr));
+    gap:22px;
+}
+
+.movie-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:9px;
+    overflow:hidden;
+    transition:.25s;
+}
+
+.movie-card:hover{
+    transform:translateY(-6px);
+    border-color:var(--red);
+}
+
+.poster{
+    width:100%;
+    height:280px;
+    background:#222;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.no-poster{
+    font-size:50px;
+}
+
+.info{
+    padding:15px;
+}
+
+.info h3{
+    font-size:17px;
+    margin-bottom:7px;
+}
+
+.meta{
+    color:#888;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.rating{
+    color:var(--gold);
+    margin-bottom:12px;
+}
+
+.buttons{
+    display:flex;
+    gap:7px;
+}
+
+.buttons button{
+    flex:1;
+    padding:9px 5px;
+    border:0;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.watch{
+    background:#292929;
+    color:white;
+}
+
+.review{
+    background:var(--red);
+    color:white;
+}
+
+#watchlist{
+    background:#101010;
+}
+
+.watch-box{
+    max-width:800px;
+    margin:auto;
+    background:#151515;
+    padding:25px;
+    border:1px solid #292929;
+    border-radius:9px;
+}
+
+.watch-item{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #292929;
+}
+
+.remove{
+    background:#292929;
+    color:white;
+    border:0;
+    padding:7px 12px;
+    border-radius:5px;
+}
+
+.review-box{
+    max-width:700px;
+    margin:auto;
+    background:#151515;
+    padding:25px;
+    border-radius:9px;
+}
+
+.review-box input,
+.review-box textarea{
+    width:100%;
+    padding:13px;
+    margin-bottom:15px;
+    background:#090909;
+    border:1px solid #333;
+    color:white;
+    border-radius:5px;
+}
+
+.review-box textarea{
+    min-height:120px;
+}
+
+footer{
+    text-align:center;
+    padding:45px;
+    background:#050505;
+    color:#777;
+}
+
+@media(max-width:700px){
+
+    header{
+        flex-direction:column;
+        gap:15px;
     }
 
-    body {
-      background: #f8f8f8;
-      color: #222;
+    nav{
+        flex-wrap:wrap;
+        justify-content:center;
     }
 
-    /* Header */
-    header {
-      background: #ff4d2d;
-      color: white;
-      padding: 18px 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .hero h1{
+        font-size:43px;
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
+    section{
+        padding:45px 5%;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      font-weight: bold;
+    .movie-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+        gap:12px;
     }
 
-    nav a:hover {
-      color: #ffe1d9;
+    .poster{
+        height:250px;
     }
-
-    /* Hero */
-    .hero {
-      background: linear-gradient(
-          rgba(0,0,0,0.45),
-          rgba(0,0,0,0.45)
-        ),
-        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80");
-
-      background-size: cover;
-      background-position: center;
-      min-height: 430px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 30px;
-    }
-
-    .hero-content h1 {
-      font-size: 48px;
-      margin-bottom: 15px;
-    }
-
-    .hero-content p {
-      font-size: 20px;
-      margin-bottom: 25px;
-    }
-
-    .search-box {
-      background: white;
-      padding: 8px;
-      border-radius: 50px;
-      display: flex;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    .search-box input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 14px 20px;
-      font-size: 16px;
-      border-radius: 50px;
-    }
-
-    .search-box button {
-      border: none;
-      background: #ff4d2d;
-      color: white;
-      padding: 14px 25px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Categories */
-    .section {
-      padding: 50px 7%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 32px;
-    }
-
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .category {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      transition: 0.3s;
-    }
-
-    .category:hover {
-      transform: translateY(-5px);
-      background: #fff0eb;
-    }
-
-    .category span {
-      font-size: 35px;
-      display: block;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    /* Food Cards */
-    .food-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .food-card {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-
-    .food-card:hover {
-      transform: translateY(-7px);
-    }
-
-    .food-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .food-info {
-      padding: 20px;
-    }
-
-    .food-info h3 {
-      margin-bottom: 8px;
-      font-size: 21px;
-    }
-
-    .food-info p {
-      color: #777;
-      margin-bottom: 12px;
-    }
-
-    .price {
-      color: #ff4d2d;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .add-btn {
-      float: right;
-      background: #ff4d2d;
-      border: none;
-      color: white;
-      padding: 9px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .add-btn:hover {
-      background: #e63c20;
-    }
-
-    /* Cart */
-    .cart {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: #ff4d2d;
-      color: white;
-      padding: 15px 22px;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.25);
-      font-weight: bold;
-      z-index: 200;
-    }
-
-    /* Footer */
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      margin-top: 30px;
-    }
-
-    /* Responsive */
-    @media (max-width: 700px) {
-      header {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      nav a {
-        margin: 0 8px;
-      }
-
-      .hero-content h1 {
-        font-size: 35px;
-      }
-
-      .hero-content p {
-        font-size: 16px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">🍔 Foodie</div>
+<header>
+
+    <div class="logo">🎬 CINEPULSE</div>
 
     <nav>
-      <a href="#home">Home</a>
-      <a href="#menu">Menu</a>
-      <a href="#categories">Categories</a>
-      <a href="#contact">Contact</a>
+        <a href="#home">Home</a>
+        <a href="#movies">Movies</a>
+        <a href="#watchlist">Watchlist</a>
+        <a href="#reviews">Reviews</a>
     </nav>
-  </header>
+
+</header>
 
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h1>Delicious Food, Delivered Fast!</h1>
-      <p>Order your favorite meals from the best restaurants near you.</p>
+<section class="hero" id="home">
 
-      <div class="search-box">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search for food..."
-          onkeyup="searchFood()"
-        >
-        <button onclick="searchFood()">Search</button>
-      </div>
-    </div>
-  </section>
+    <div>
 
+        <h1>
+            Feel Every <span>Frame.</span>
+        </h1>
 
-  <!-- Categories -->
-  <section class="section" id="categories">
-    <h2 class="section-title">Food Categories</h2>
+        <p>
+            Discover movies, explore Indian cinema,
+            check ratings and create your personal
+            watchlist with CinePulse.
+        </p>
 
-    <div class="categories">
-      <div class="category">
-        <span>🍕</span>
-        Pizza
-      </div>
-
-      <div class="category">
-        <span>🍔</span>
-        Burgers
-      </div>
-
-      <div class="category">
-        <span>🍜</span>
-        Noodles
-      </div>
-
-      <div class="category">
-        <span>🍛</span>
-        Indian
-      </div>
-
-      <div class="category">
-        <span>🍰</span>
-        Desserts
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Menu -->
-  <section class="section" id="menu">
-    <h2 class="section-title">Popular Food</h2>
-
-    <div class="food-grid" id="foodGrid">
-
-      <!-- Food 1 -->
-      <div class="food-card" data-name="cheese pizza">
-        <img
-          src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80"
-          alt="Cheese Pizza"
-        >
-
-        <div class="food-info">
-          <h3>Cheese Pizza</h3>
-          <p>Hot and cheesy Italian pizza.</p>
-
-          <span class="price">₹249</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Cheese Pizza', 249)">
-            Add
-          </button>
-        </div>
-      </div>
-
-
-      <!-- Food 2 -->
-      <div class="food-card" data-name="chicken burger">
-        <img
-          src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
-          alt="Chicken Burger"
-        >
-
-        <div class="food-info">
-          <h3>Chicken Burger</h3>
-          <p>Juicy chicken burger with fresh veggies.</p>
-
-          <span class="price">₹179</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Chicken Burger', 179)">
-            Add
-          </button>
-        </div>
-      </div>
-
-
-      <!-- Food 3 -->
-      <div class="food-card" data-name="noodles">
-        <img
-          src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"
-          alt="Noodles"
-        >
-
-        <div class="food-info">
-          <h3>Spicy Noodles</h3>
-          <p>Delicious spicy noodles with vegetables.</p>
-
-          <span class="price">₹159</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Spicy Noodles', 159)">
-            Add
-          </button>
-        </div>
-      </div>
-
-
-      <!-- Food 4 -->
-      <div class="food-card" data-name="biryani">
-        <img
-          src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
-          alt="Biryani"
-        >
-
-        <div class="food-info">
-          <h3>Chicken Biryani</h3>
-          <p>Flavorful Indian chicken biryani.</p>
-
-          <span class="price">₹299</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Chicken Biryani', 299)">
-            Add
-          </button>
-        </div>
-      </div>
-
-
-      <!-- Food 5 -->
-      <div class="food-card" data-name="pasta">
-        <img
-          src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80"
-          alt="Pasta"
-        >
-
-        <div class="food-info">
-          <h3>Creamy Pasta</h3>
-          <p>Creamy pasta with herbs and cheese.</p>
-
-          <span class="price">₹219</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Creamy Pasta', 219)">
-            Add
-          </button>
-        </div>
-      </div>
-
-
-      <!-- Food 6 -->
-      <div class="food-card" data-name="cake">
-        <img
-          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
-          alt="Chocolate Cake"
-        >
-
-        <div class="food-info">
-          <h3>Chocolate Cake</h3>
-          <p>Rich and delicious chocolate cake.</p>
-
-          <span class="price">₹149</span>
-
-          <button class="add-btn"
-            onclick="addToCart('Chocolate Cake', 149)">
-            Add
-          </button>
-        </div>
-      </div>
+        <button
+            class="btn red"
+            onclick="goMovies()">
+            Explore Movies
+        </button>
 
     </div>
-  </section>
+
+</section>
 
 
-  <!-- Cart Button -->
-  <div class="cart" onclick="showCart()">
-    🛒 Cart: <span id="cartCount">0</span>
-  </div>
+<div class="search">
+
+    <input
+        id="search"
+        placeholder="🔍 Search movies..."
+        oninput="searchMovies()">
+
+</div>
 
 
-  <!-- Footer -->
-  <footer id="contact">
-    <h3>🍔 Foodie</h3>
-    <p>Fresh food delivered to your doorstep.</p>
-    <br>
-    <p>© 2026 Foodie. All Rights Reserved.</p>
-  </footer>
+<section id="movies">
+
+    <h2 class="title">
+        Featured <span>Movies</span>
+    </h2>
+
+    <div class="filters">
+
+        <button
+            class="active"
+            onclick="filterMovies('All',this)">
+            All
+        </button>
+
+        <button
+            onclick="filterMovies('Malayalam',this)">
+            Malayalam
+        </button>
+
+        <button
+            onclick="filterMovies('Tamil',this)">
+            Tamil
+        </button>
+
+    </div>
+
+    <div
+        class="movie-grid"
+        id="movieGrid">
+    </div>
+
+</section>
 
 
-  <script>
-    let cart = [];
-    let cartCount = 0;
-    let total = 0;
+<section id="watchlist">
 
-    // Add item to cart
-    function addToCart(name, price) {
-      cart.push({
-        name: name,
-        price: price
-      });
-
-      cartCount++;
-      total += price;
-
-      document.getElementById("cartCount").innerText = cartCount;
-
-      alert(name + " added to cart!");
-    }
-
-
-    // Show cart
-    function showCart() {
-      if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-
-      let message = "🛒 Your Cart\\n\\n";
-
-      cart.forEach((item, index) => {
-        message +=
-          (index + 1) +
-          ". " +
-          item.name +
-          " - ₹" +
-          item.price +
-          "\\n";
-      });
-
-      message += "\\nTotal: ₹" + total;
-
-      alert(message);
-    }
-
-
-    // Search food
-    function searchFood() {
-      let search =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-      let cards =
-        document.querySelectorAll(".food-card");
-
-      cards.forEach(function(card) {
-        let name =
-          card.getAttribute("data-name");
-
-        if (name.includes(search)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    }
-  </script>
-
-</body>
-</html>
-```
+    <h2 class="
